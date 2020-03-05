@@ -9,21 +9,14 @@ import android.util.Log
 import com.tealium.internal.tagbridge.RemoteCommand
 import org.json.JSONObject
 
-open class ContentsquareRemoteCommand : RemoteCommand {
+open class ContentsquareRemoteCommand @JvmOverloads constructor(
+    application: Application? = null,
+    commandId: String = DEFAULT_COMMAND_ID,
+    description: String = DEFAULT_COMMAND_DESCRIPTION
+) : RemoteCommand(commandId, description) {
 
     private val TAG = this::class.java.simpleName
-    var tracker: ContentsquareTrackable
-    var application: Application? = null
-
-    @JvmOverloads
-    constructor(
-        application: Application?,
-        commandId: String = DEFAULT_COMMAND_ID,
-        description: String = DEFAULT_COMMAND_DESCRIPTION
-    ) : super(commandId, description) {
-        this.application = application
-        tracker = ContentsquareTracker(application)
-    }
+    var tracker: ContentsquareTrackable = ContentsquareTracker(application)
 
     companion object {
         val DEFAULT_COMMAND_ID = "contentsquare"
@@ -43,6 +36,9 @@ open class ContentsquareRemoteCommand : RemoteCommand {
         return command.split(Commands.SEPARATOR.toRegex())
             .dropLastWhile {
                 it.isEmpty()
+            }
+            .map {
+                it.trim().toLowerCase()
             }
             .toTypedArray()
     }
