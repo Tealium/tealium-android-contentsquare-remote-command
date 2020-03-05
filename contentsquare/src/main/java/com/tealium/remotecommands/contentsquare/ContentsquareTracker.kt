@@ -8,7 +8,7 @@ import com.contentsquare.android.ContentSquare
 import com.contentsquare.android.api.model.Transaction
 import org.json.JSONObject
 
-class ContentsquareTracker(val application: Application? = null) : ContentsquareTrackable {
+class ContentsquareTracker(private val application: Application? = null) : ContentsquareTrackable {
 
     private val TAG = this::class.java.simpleName
 
@@ -22,7 +22,7 @@ class ContentsquareTracker(val application: Application? = null) : Contentsquare
             "Sending ${TransactionProperties.TRANSACTION} with ${TransactionProperties.PRICE}: $amount, ${TransactionProperties.CURRENCY}: $currency, ${TransactionProperties.ID}: $id"
         )
         id?.let {
-            ContentSquare.send(Transaction.builder(amount, currency).id(id).build())
+            ContentSquare.send(Transaction.builder(amount, currency).id(it).build())
         } ?: run {
             ContentSquare.send(Transaction.builder(amount, currency).build())
         }
@@ -66,7 +66,7 @@ class ContentsquareTracker(val application: Application? = null) : Contentsquare
 
     override fun optOut() {
         application?.let {
-            ContentSquare.optOut(application.applicationContext)
+            ContentSquare.optOut(it.applicationContext)
         } ?: run {
             Log.d(
                 TAG,
