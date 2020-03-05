@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">tealium-android-contentsquare-remote-command</string>
+    <string name="nameTextView">NameTextView</string>
+    <string name="api_key">api key</string>
+    <string name="track_screen">Track Screen</string>
+    <string name="stop_tracking">Stop Tracking</string>
+    <string name="resume_tracking">Resume Tracking</string>
+    <string name="opt_in">Opt In</string>
+    <string name="opt_out">Opt Out</string>
+    <string name="forget_me">Forget Me</string>
+    <string name="get_user_id">Get User Id</string>
+</resources>
