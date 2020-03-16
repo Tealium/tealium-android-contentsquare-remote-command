@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
                 TransactionProperties.TRANSACTION, mapOf(
                     TransactionProperties.TRANSACTION to mapOf(
                         TransactionProperties.PRICE to 10.99,
-                        TransactionProperties.CURRENCY to 1,
+                        TransactionProperties.CURRENCY to "usd",
                         TransactionProperties.ID to 12345
                     )
                 )
