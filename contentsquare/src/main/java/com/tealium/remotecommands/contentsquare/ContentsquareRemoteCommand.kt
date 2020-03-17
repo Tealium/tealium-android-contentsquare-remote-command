@@ -62,14 +62,14 @@ open class ContentsquareRemoteCommand @JvmOverloads constructor(
                     val transaction = payload.optJSONObject(TransactionProperties.TRANSACTION)
                     transaction?.let { json ->
                         val amount = json.optDouble(TransactionProperties.PRICE).toFloat()
-                        val currency = transaction.optInt(TransactionProperties.CURRENCY)
+                        val currency = transaction.optString(TransactionProperties.CURRENCY)
                         var id: String? = transaction.optString(TransactionProperties.ID)
                         id?.let {
                             if (it.isEmpty()) {
                                 id = null
                             }
                         }
-                        if (amount > 0 && currency > 0) {
+                        if (amount > 0 && currency.isNotEmpty()) {
                             tracker.sendTransaction(amount, currency, id)
                         }
                     } ?: run {
