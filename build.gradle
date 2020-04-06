@@ -4,7 +4,7 @@ buildscript {
     ext.kotlin_version = '1.3.50'
     ext.mockk_version = '1.9'
     ext.tealium_version = '5.7.0'
-    ext.tealium_contentsquare_version = '0.0.1'
+    ext.tealium_contentsquare_version = '1.0.0'
     repositories {
         google()
         jcenter()
@@ -25,6 +25,10 @@ allprojects {
 
         maven {
             url "http://maven.tealiumiq.com/android/releases/"
+            credentials (AwsCredentials) {
+                accessKey AWS_ACCESS_KEY
+                secretKey AWS_SECRET_KEY
+            }
         }
     }
 }
