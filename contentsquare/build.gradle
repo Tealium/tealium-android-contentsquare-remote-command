@@ -1,6 +1,8 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'maven-publish'
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.1"
@@ -22,7 +24,27 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+}
 
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId 'com.tealium.remotecommands'
+            artifactId 'contentsquare'
+            version "$tealium_contentsquare_version"
+            artifact("$buildDir/outputs/aar/contentsquare-release.aar")
+        }
+    }
+    repositories {
+        maven {
+            url "s3://maven.tealiumiq.com/android/releases/"
+            credentials(AwsCredentials) {
+                // Dummy credentials provided in project's gradle.properties; these will be overridden by your global settings in ~/.gradle/gradle.properties
+                accessKey AWS_ACCESS_KEY
+                secretKey AWS_SECRET_KEY
+            }
+        }
+    }
 }
 
 dependencies {

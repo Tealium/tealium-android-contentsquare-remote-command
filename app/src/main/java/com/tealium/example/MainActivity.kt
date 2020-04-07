@@ -1,7 +1,7 @@
 package com.tealium.example
 
-import TransactionProperties
 import DynamicVar
+import TransactionProperties
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -25,6 +25,10 @@ class MainActivity : AppCompatActivity() {
         listRecyclerView.adapter = ListAdapter()
 
         supportActionBar?.title = "Tealium Contentsquare Demo"
+    }
+
+    override fun onResume() {
+        super.onResume()
         TealiumHelper.trackEvent("screen_title", mapOf("screen" to "home"))
     }
 
