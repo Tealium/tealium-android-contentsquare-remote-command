@@ -1,5 +1,6 @@
 package com.tealium.example
 
+import com.contentsquare.android.Contentsquare
 import com.tealium.library.Tealium
 
 object TealiumHelper {

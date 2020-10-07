@@ -4,7 +4,7 @@ import DynamicVar
 import TransactionProperties
 import android.app.Application
 import android.util.Log
-import com.contentsquare.android.ContentSquare
+import com.contentsquare.android.Contentsquare
 import com.contentsquare.android.api.model.Transaction
 import org.json.JSONObject
 
@@ -13,7 +13,7 @@ class ContentsquareTracker(private val application: Application? = null) : Conte
     private val TAG = this::class.java.simpleName
 
     override fun send(screenName: String) {
-        ContentSquare.send(screenName)
+        Contentsquare.send(screenName)
     }
 
     override fun sendTransaction(amount: Float, currency: String, id: String?) {
@@ -23,19 +23,20 @@ class ContentsquareTracker(private val application: Application? = null) : Conte
         )
         val csCurrency = currency(currency)
         id?.let {
-            ContentSquare.send(Transaction.builder(amount, csCurrency).id(it).build())
+            Contentsquare.send(Transaction.builder(amount, csCurrency).id(it).build())
         } ?: run {
-            ContentSquare.send(Transaction.builder(amount, csCurrency).build())
+            Contentsquare.send(Transaction.builder(amount, csCurrency).build())
         }
     }
 
     override fun sendDynamicVar(dynamicVar: JSONObject) {
         Log.d(TAG, "${DynamicVar.DYNAMIC_VAR}: $dynamicVar")
+        Contentsquare.send("zzzzz")
         dynamicVar.keys().forEach { key ->
             val value = dynamicVar.optString(key)
             if (value.isNotEmpty()) {
                 Log.d(TAG, "Sending ${DynamicVar.DYNAMIC_VAR} with key: $key, value: $value")
-                ContentSquare.send(key, value)
+                Contentsquare.send(key, value)
             } else {
                 Log.d(TAG, "Not sending ${DynamicVar.DYNAMIC_VAR}, $value is empty.")
             }
@@ -43,20 +44,20 @@ class ContentsquareTracker(private val application: Application? = null) : Conte
     }
 
     override fun stopTracking() {
-        ContentSquare.stopTracking()
+        Contentsquare.stopTracking()
     }
 
     override fun resumeTracking() {
-        ContentSquare.resumeTracking()
+        Contentsquare.resumeTracking()
     }
 
     override fun forgetMe() {
-        ContentSquare.forgetMe()
+        Contentsquare.forgetMe()
     }
 
     override fun optIn() {
         application?.let {
-            ContentSquare.optIn(application.applicationContext)
+            Contentsquare.optIn(application.applicationContext)
         } ?: run {
             Log.d(
                 TAG,
@@ -67,7 +68,7 @@ class ContentsquareTracker(private val application: Application? = null) : Conte
 
     override fun optOut() {
         application?.let {
-            ContentSquare.optOut(it.applicationContext)
+            Contentsquare.optOut(it.applicationContext)
         } ?: run {
             Log.d(
                 TAG,
