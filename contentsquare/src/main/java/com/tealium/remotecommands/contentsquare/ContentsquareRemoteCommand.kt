@@ -1,12 +1,12 @@
 package com.tealium.remotecommands.contentsquare
 
-import TransactionProperties
 import Commands
 import DynamicVar
 import ScreenView
+import TransactionProperties
 import android.app.Application
 import android.util.Log
-import com.tealium.internal.tagbridge.RemoteCommand
+import com.tealium.remotecommands.RemoteCommand
 import org.json.JSONObject
 
 open class ContentsquareRemoteCommand @JvmOverloads constructor(

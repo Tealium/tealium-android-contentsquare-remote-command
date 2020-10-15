@@ -31,7 +31,6 @@ class ContentsquareTracker(private val application: Application? = null) : Conte
 
     override fun sendDynamicVar(dynamicVar: JSONObject) {
         Log.d(TAG, "${DynamicVar.DYNAMIC_VAR}: $dynamicVar")
-        Contentsquare.send("zzzzz")
         dynamicVar.keys().forEach { key ->
             val value = dynamicVar.optString(key)
             if (value.isNotEmpty()) {
@@ -80,10 +79,6 @@ class ContentsquareTracker(private val application: Application? = null) : Conte
     private fun currency(value: String): Int {
         val currencyType = CurrencyType.valueOf(value.toUpperCase())
         return currencyType.value
-    }
-
-    enum class MyEnum {
-        Foo, Bar, Baz
     }
 
     enum class CurrencyType(val value: Int) {

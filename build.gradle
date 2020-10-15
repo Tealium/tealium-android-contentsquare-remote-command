@@ -1,14 +1,15 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.kotlin_version = '1.3.50'
+    ext.kotlin_version = '1.4.10'
     ext.mockk_version = '1.9'
-    ext.tealium_version = '5.7.0'
-    ext.tealium_contentsquare_version = '1.0.0'
+    ext.tealium_core_version = '0.1.2'
+    ext.tealium_remotecommand_dispatcher_version = '0.1.2'
+    ext.tealium_tagmanagement_dispatcher_version = '0.1.2'
+    ext.tealium_contentsquare_version = '2.0.0'
     repositories {
         google()
         jcenter()
-
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.0.1'
@@ -20,6 +21,7 @@ buildscript {
 
 allprojects {
     repositories {
+        mavenLocal() // todo: remove after rc
         google()
         jcenter()
 

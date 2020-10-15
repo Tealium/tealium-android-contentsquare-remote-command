@@ -61,7 +61,7 @@ class ContentsquareRemoteCommandTest {
     fun sendTransactionCalledWithPayloadKey() {
         val innerPayload = JSONObject()
         innerPayload.put(TransactionProperties.PRICE, 10.99)
-        innerPayload.put(TransactionProperties.CURRENCY, 1)
+        innerPayload.put(TransactionProperties.CURRENCY, "1")
 
         val outerPayload = JSONObject()
         outerPayload.put(TransactionProperties.TRANSACTION, innerPayload)
@@ -71,7 +71,7 @@ class ContentsquareRemoteCommandTest {
         contentsquareRemoteCommand.parseCommands(arrayOf(Commands.SEND_TRANSACTION), outerPayload)
 
         verify {
-            mockTracker.sendTransaction(10.99F, "usd", null)
+            mockTracker.sendTransaction(10.99F, "1", null)
         }
         confirmVerified(mockTracker)
     }
@@ -91,7 +91,7 @@ class ContentsquareRemoteCommandTest {
         contentsquareRemoteCommand.parseCommands(arrayOf(Commands.SEND_TRANSACTION), outerPayload)
 
         verify {
-            mockTracker.sendTransaction(10.99F, "eur", "123")
+            mockTracker.sendTransaction(10.99F, "1", "123")
         }
         confirmVerified(mockTracker)
     }

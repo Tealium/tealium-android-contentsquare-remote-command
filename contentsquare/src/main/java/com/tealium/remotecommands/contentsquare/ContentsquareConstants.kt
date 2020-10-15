@@ -9,8 +9,8 @@ object Commands {
     const val SEND_DYNAMIC_VAR = "senddynamicvar"
     const val STOP_TRACKING = "stoptracking"
     const val RESUME_TRACKING = "resumetracking"
-    const val FORGET_ME= "forgetme"
-    const val OPT_IN= "optin"
+    const val FORGET_ME = "forgetme"
+    const val OPT_IN = "optin"
     const val OPT_OUT = "optout"
 }
 
@@ -20,6 +20,7 @@ object ScreenView {
 
 object TransactionProperties {
     const val TRANSACTION = "transaction"
+    const val PURCHASE = "purchase"
     const val PRICE = "price" // required
     const val CURRENCY = "currency" // required
     const val ID = "transaction_id" // optional
