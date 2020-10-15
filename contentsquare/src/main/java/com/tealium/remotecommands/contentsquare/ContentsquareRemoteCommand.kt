@@ -59,7 +59,10 @@ open class ContentsquareRemoteCommand @JvmOverloads constructor(
                     }
                 }
                 Commands.SEND_TRANSACTION -> {
-                    val transaction = payload.optJSONObject(TransactionProperties.TRANSACTION)
+                    var transaction = payload.optJSONObject(TransactionProperties.TRANSACTION)
+                    if (transaction == null) {
+                        transaction = payload.optJSONObject(TransactionProperties.PURCHASE)
+                    }
                     transaction?.let { json ->
                         val amount = json.optDouble(TransactionProperties.PRICE).toFloat()
                         val currency = transaction.optString(TransactionProperties.CURRENCY)
@@ -73,7 +76,7 @@ open class ContentsquareRemoteCommand @JvmOverloads constructor(
                             tracker.sendTransaction(amount, currency, id)
                         }
                     } ?: run {
-                        Log.e(TAG, "${TransactionProperties.TRANSACTION} $REQUIRED_KEY")
+                        Log.e(TAG, "${TransactionProperties.TRANSACTION} or ${TransactionProperties.PURCHASE} $REQUIRED_KEY")
                     }
                 }
                 Commands.SEND_DYNAMIC_VAR -> {
