@@ -8,7 +8,7 @@ import com.contentsquare.android.Contentsquare
 import com.contentsquare.android.api.model.Transaction
 import org.json.JSONObject
 
-class ContentsquareTracker(private val application: Application? = null) : ContentsquareTrackable {
+class ContentsquareInstance(private val application: Application? = null) : ContentsquareCommand {
 
     private val TAG = this::class.java.simpleName
 

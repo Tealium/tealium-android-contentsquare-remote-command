@@ -16,7 +16,7 @@ open class ContentsquareRemoteCommand @JvmOverloads constructor(
 ) : RemoteCommand(commandId, description) {
 
     private val TAG = this::class.java.simpleName
-    var tracker: ContentsquareTrackable = ContentsquareTracker(application)
+    var contentsquareInstance: ContentsquareCommand = ContentsquareInstance(application)
 
     companion object {
         val DEFAULT_COMMAND_ID = "contentsquare"
@@ -50,7 +50,7 @@ open class ContentsquareRemoteCommand @JvmOverloads constructor(
                     payload.optString(ScreenView.NAME).also {
                         if (it.isNotEmpty()) {
                             Log.d(TAG, "Sending screenview $it")
-                            tracker.send(it)
+                            contentsquareInstance.send(it)
                         } else {
                             Log.d(TAG, "Not sending screenview, ${ScreenView.NAME} was empty")
                         }
@@ -73,7 +73,7 @@ open class ContentsquareRemoteCommand @JvmOverloads constructor(
                             }
                         }
                         if (amount > 0 && currency.isNotEmpty()) {
-                            tracker.sendTransaction(amount, currency, id)
+                            contentsquareInstance.sendTransaction(amount, currency, id)
                         }
                     } ?: run {
                         Log.e(TAG, "${TransactionProperties.TRANSACTION} or ${TransactionProperties.PURCHASE} $REQUIRED_KEY")
@@ -82,25 +82,25 @@ open class ContentsquareRemoteCommand @JvmOverloads constructor(
                 Commands.SEND_DYNAMIC_VAR -> {
                     val dynamicVar = payload.optJSONObject(DynamicVar.DYNAMIC_VAR)
                     dynamicVar?.let {
-                        tracker.sendDynamicVar(dynamicVar)
+                        contentsquareInstance.sendDynamicVar(dynamicVar)
                     } ?: run {
                         Log.e(TAG, "${DynamicVar.DYNAMIC_VAR} $REQUIRED_KEY")
                     }
                 }
                 Commands.STOP_TRACKING -> {
-                    tracker.stopTracking()
+                    contentsquareInstance.stopTracking()
                 }
                 Commands.RESUME_TRACKING -> {
-                    tracker.resumeTracking()
+                    contentsquareInstance.resumeTracking()
                 }
                 Commands.FORGET_ME -> {
-                    tracker.forgetMe()
+                    contentsquareInstance.forgetMe()
                 }
                 Commands.OPT_IN -> {
-                    tracker.optIn()
+                    contentsquareInstance.optIn()
                 }
                 Commands.OPT_OUT -> {
-                    tracker.optOut()
+                    contentsquareInstance.optOut()
                 }
             }
         }

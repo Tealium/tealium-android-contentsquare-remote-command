@@ -16,7 +16,7 @@ import org.robolectric.RobolectricTestRunner
 class ContentsquareRemoteCommandTest {
 
     @MockK
-    lateinit var mockTracker: ContentsquareTrackable
+    lateinit var mockCommand: ContentsquareCommand
 
     @InjectMockKs
     var contentsquareRemoteCommand: ContentsquareRemoteCommand = ContentsquareRemoteCommand(null)
@@ -24,7 +24,7 @@ class ContentsquareRemoteCommandTest {
     @Before
     fun setUp() {
         MockKAnnotations.init(this, relaxUnitFun = true)
-        contentsquareRemoteCommand.tracker = mockTracker
+        contentsquareRemoteCommand.contentsquareInstance = mockCommand
     }
 
     @Test
@@ -32,14 +32,14 @@ class ContentsquareRemoteCommandTest {
         val payload = JSONObject()
         payload.put(ScreenView.NAME, "home")
 
-        every { mockTracker.send("home") } just Runs
+        every { mockCommand.send("home") } just Runs
 
         contentsquareRemoteCommand.parseCommands(arrayOf(Commands.SEND_SCREEN_VIEW), payload)
 
         verify {
-            mockTracker.send("home")
+            mockCommand.send("home")
         }
-        confirmVerified(mockTracker)
+        confirmVerified(mockCommand)
     }
 
     @Test
@@ -47,14 +47,14 @@ class ContentsquareRemoteCommandTest {
         val payload = JSONObject()
         payload.put("not_screen_name", "home")
 
-        every { mockTracker.send("home") } just Runs
+        every { mockCommand.send("home") } just Runs
 
         contentsquareRemoteCommand.parseCommands(arrayOf(Commands.SEND_SCREEN_VIEW), payload)
 
         verify {
-            mockTracker wasNot Called
+            mockCommand wasNot Called
         }
-        confirmVerified(mockTracker)
+        confirmVerified(mockCommand)
     }
 
     @Test
@@ -66,14 +66,14 @@ class ContentsquareRemoteCommandTest {
         val outerPayload = JSONObject()
         outerPayload.put(TransactionProperties.TRANSACTION, innerPayload)
 
-        every { mockTracker.sendTransaction(any(), any()) } just Runs
+        every { mockCommand.sendTransaction(any(), any()) } just Runs
 
         contentsquareRemoteCommand.parseCommands(arrayOf(Commands.SEND_TRANSACTION), outerPayload)
 
         verify {
-            mockTracker.sendTransaction(10.99F, "1", null)
+            mockCommand.sendTransaction(10.99F, "1", null)
         }
-        confirmVerified(mockTracker)
+        confirmVerified(mockCommand)
     }
 
     @Test
@@ -86,14 +86,14 @@ class ContentsquareRemoteCommandTest {
         val outerPayload = JSONObject()
         outerPayload.put(TransactionProperties.TRANSACTION, innerPayload)
 
-        every { mockTracker.sendTransaction(any(), any()) } just Runs
+        every { mockCommand.sendTransaction(any(), any()) } just Runs
 
         contentsquareRemoteCommand.parseCommands(arrayOf(Commands.SEND_TRANSACTION), outerPayload)
 
         verify {
-            mockTracker.sendTransaction(10.99F, "1", "123")
+            mockCommand.sendTransaction(10.99F, "1", "123")
         }
-        confirmVerified(mockTracker)
+        confirmVerified(mockCommand)
     }
 
     @Test
@@ -105,14 +105,14 @@ class ContentsquareRemoteCommandTest {
         val outerPayload = JSONObject()
         outerPayload.put("not_transaction", innerPayload)
 
-        every { mockTracker.sendTransaction(any(), any()) } just Runs
+        every { mockCommand.sendTransaction(any(), any()) } just Runs
 
         contentsquareRemoteCommand.parseCommands(arrayOf(Commands.SEND_TRANSACTION), outerPayload)
 
         verify {
-            mockTracker wasNot Called
+            mockCommand wasNot Called
         }
-        confirmVerified(mockTracker)
+        confirmVerified(mockCommand)
     }
 
     @Test
@@ -124,14 +124,14 @@ class ContentsquareRemoteCommandTest {
         val outerPayload = JSONObject()
         outerPayload.put(TransactionProperties.TRANSACTION, innerPayload)
 
-        every { mockTracker.sendTransaction(any(), any()) } just Runs
+        every { mockCommand.sendTransaction(any(), any()) } just Runs
 
         contentsquareRemoteCommand.parseCommands(arrayOf(Commands.SEND_TRANSACTION), outerPayload)
 
         verify {
-            mockTracker wasNot Called
+            mockCommand wasNot Called
         }
-        confirmVerified(mockTracker)
+        confirmVerified(mockCommand)
     }
 
     @Test
@@ -143,14 +143,14 @@ class ContentsquareRemoteCommandTest {
         val outerPayload = JSONObject()
         outerPayload.put(TransactionProperties.TRANSACTION, innerPayload)
 
-        every { mockTracker.sendTransaction(any(), any()) } just Runs
+        every { mockCommand.sendTransaction(any(), any()) } just Runs
 
         contentsquareRemoteCommand.parseCommands(arrayOf(Commands.SEND_TRANSACTION), outerPayload)
 
         verify {
-            mockTracker wasNot Called
+            mockCommand wasNot Called
         }
-        confirmVerified(mockTracker)
+        confirmVerified(mockCommand)
     }
 
     @Test
@@ -161,14 +161,14 @@ class ContentsquareRemoteCommandTest {
         val outerPayload = JSONObject()
         outerPayload.put(DynamicVar.DYNAMIC_VAR, innerPayload)
 
-        every { mockTracker.sendDynamicVar(any()) } just Runs
+        every { mockCommand.sendDynamicVar(any()) } just Runs
 
         contentsquareRemoteCommand.parseCommands(arrayOf(Commands.SEND_DYNAMIC_VAR), outerPayload)
 
         verify {
-            mockTracker.sendDynamicVar(innerPayload)
+            mockCommand.sendDynamicVar(innerPayload)
         }
-        confirmVerified(mockTracker)
+        confirmVerified(mockCommand)
     }
 
     @Test
@@ -179,13 +179,13 @@ class ContentsquareRemoteCommandTest {
         val outerPayload = JSONObject()
         outerPayload.put("not_dynamic_var", innerPayload)
 
-        every { mockTracker.sendDynamicVar(any()) } just Runs
+        every { mockCommand.sendDynamicVar(any()) } just Runs
 
         contentsquareRemoteCommand.parseCommands(arrayOf(Commands.SEND_DYNAMIC_VAR), outerPayload)
 
         verify {
-            mockTracker wasNot Called
+            mockCommand wasNot Called
         }
-        confirmVerified(mockTracker)
+        confirmVerified(mockCommand)
     }
 }
