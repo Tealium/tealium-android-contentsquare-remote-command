@@ -32,7 +32,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation "com.tealium:kotlin-core:$tealium_core_version"
-    implementation "com.tealium:kotlin-lifecycle:0.1.1"
+    implementation "com.tealium:kotlin-lifecycle:1.0.0"
     implementation "com.tealium:kotlin-remotecommand-dispatcher:$tealium_remotecommand_dispatcher_version"
     implementation "com.tealium:kotlin-tagmanagement-dispatcher:$tealium_tagmanagement_dispatcher_version"
     releaseImplementation 'com.tealium.remotecommands:contentsquare:1.0.0'
