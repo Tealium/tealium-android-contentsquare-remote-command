@@ -1,0 +1,27 @@
+{
+  "config": {},
+  "mappings": {
+    "screen": "screen_name",
+    "dynamic_var": "dynamic_var",
+    "order_total": "purchase.price",
+    "order_currency": "purchase.currency",
+    "order_id": "purchase.transaction_id"
+  },
+  "commands": {
+    "screen_title": "sendscreenview",
+    "dynamic_var": "senddynamicvar",
+    "transaction": "sendtransaction",
+    "stop_tracking": "stoptracking",
+    "resume_tracking": "resumetracking",
+    "forget_me": "forgetme",
+    "opt_in": "optin",
+    "opt_out": "optout",
+    "user_login": "senddynamicvar",
+    "join_group": "senddynamicvar,stoptracking",
+    "show_offers": "resumetracking",
+    "cart_add": "forgetme",
+    "wishlist_add": "optout",
+    "email_signup": "optin",
+    "order": "sendtransaction"
+  }
+}

@@ -9,10 +9,11 @@ android {
     buildToolsVersion "29.0.1"
     defaultConfig {
         applicationId "com.tealium.example"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
+        buildConfigField 'String', 'TAG', "\"App\""
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -21,13 +22,21 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(path: ':contentsquare')
-    implementation "com.tealium:library:$tealium_version"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    implementation "com.tealium:kotlin-core:$tealium_core_version"
+    implementation "com.tealium:kotlin-lifecycle:1.0.0"
+    implementation "com.tealium:kotlin-remotecommand-dispatcher:$tealium_remotecommand_dispatcher_version"
+    implementation "com.tealium:kotlin-tagmanagement-dispatcher:$tealium_tagmanagement_dispatcher_version"
+    releaseImplementation 'com.tealium.remotecommands:contentsquare:1.0.0'
+    debugImplementation project(path: ':contentsquare')
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.core:core-ktx:1.0.2'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'

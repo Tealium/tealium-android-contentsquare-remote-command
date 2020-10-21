@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        TealiumHelper.trackEvent("screen_title", mapOf("screen" to "home"))
+        TealiumHelper.trackView("screen_title", mapOf("screen" to "home"))
     }
 
     private inner class ListViewHolder(view: View) : RecyclerView.ViewHolder(view),
@@ -52,11 +52,9 @@ class MainActivity : AppCompatActivity() {
         private fun sendTransaction() {
             TealiumHelper.trackEvent(
                 TransactionProperties.TRANSACTION, mapOf(
-                    TransactionProperties.TRANSACTION to mapOf(
-                        TransactionProperties.PRICE to 10.99,
-                        TransactionProperties.CURRENCY to "usd",
-                        TransactionProperties.ID to 12345
-                    )
+                    "order_total" to 10.99,
+                    "order_currency" to "usd",
+                    "order_id" to 12345
                 )
             )
         }
