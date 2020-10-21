@@ -8,6 +8,7 @@ import android.app.Application
 import android.util.Log
 import com.tealium.remotecommands.RemoteCommand
 import org.json.JSONObject
+import kotlin.jvm.Throws
 
 open class ContentsquareRemoteCommand @JvmOverloads constructor(
     application: Application? = null,
