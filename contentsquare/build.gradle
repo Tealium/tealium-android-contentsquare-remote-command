@@ -35,23 +35,23 @@ publishing {
             artifact("$buildDir/outputs/aar/contentsquare-release.aar")
         }
     }
-    repositories {
-        maven {
-            url "s3://maven.tealiumiq.com/android/releases/"
-            credentials(AwsCredentials) {
-                // Dummy credentials provided in project's gradle.properties; these will be overridden by your global settings in ~/.gradle/gradle.properties
-                accessKey AWS_ACCESS_KEY
-                secretKey AWS_SECRET_KEY
-            }
-        }
-    }
+//    repositories {
+//        maven {
+//            url "s3://maven.tealiumiq.com/android/releases/"
+//            credentials(AwsCredentials) {
+//                // Dummy credentials provided in project's gradle.properties; these will be overridden by your global settings in ~/.gradle/gradle.properties
+//                accessKey AWS_ACCESS_KEY
+//                secretKey AWS_SECRET_KEY
+//            }
+//        }
+//    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "com.tealium:remotecommands:1.0.0"
-    api "com.contentsquare.android:library:3.2.0"
+    api "com.contentsquare.android:library:4.7.0"
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.core:core-ktx:1.0.2'
     testImplementation 'junit:junit:4.12'
