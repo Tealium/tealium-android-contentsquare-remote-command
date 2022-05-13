@@ -12,7 +12,6 @@ import com.tealium.dispatcher.TealiumView
 import com.tealium.remotecommanddispatcher.RemoteCommands
 import com.tealium.remotecommanddispatcher.remoteCommands
 import com.tealium.remotecommands.contentsquare.ContentsquareRemoteCommand
-import com.tealium.tealiumlibrary.BuildConfig
 
 object TealiumHelper {
 

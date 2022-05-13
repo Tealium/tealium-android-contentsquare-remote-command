@@ -1,7 +1,5 @@
 package com.tealium.example
 
-import DynamicVar
-import TransactionProperties
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,6 +9,8 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.tealium.remotecommands.contentsquare.DynamicVar
+import com.tealium.remotecommands.contentsquare.TransactionProperties
 
 class MainActivity : AppCompatActivity() {
 

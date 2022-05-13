@@ -4,18 +4,16 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'maven-publish'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.1"
-
+    compileSdkVersion 32
 
     defaultConfig {
         minSdkVersion 19
-        targetSdkVersion 29
-        versionCode 1
-        versionName "$tealium_contentsquare_version"
+        targetSdkVersion 32
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
+
+        buildConfigField "String", "TEALIUM_CONTENTSQUARE_VERSION", "\"$tealium_contentsquare_version\""
     }
 
     buildTypes {
@@ -26,36 +24,39 @@ android {
     }
 }
 
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            groupId 'com.tealium.remotecommands'
-            artifactId 'contentsquare'
-            version "$tealium_contentsquare_version"
-            artifact("$buildDir/outputs/aar/contentsquare-release.aar")
+afterEvaluate {
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.release
+                groupId 'com.tealium.remotecommands'
+                artifactId 'contentsquare'
+                version "$tealium_contentsquare_version"
+            }
         }
-    }
-//    repositories {
-//        maven {
-//            url "s3://maven.tealiumiq.com/android/releases/"
-//            credentials(AwsCredentials) {
-//                // Dummy credentials provided in project's gradle.properties; these will be overridden by your global settings in ~/.gradle/gradle.properties
-//                accessKey AWS_ACCESS_KEY
-//                secretKey AWS_SECRET_KEY
+//        repositories {
+//            maven {
+//                url "s3://maven.tealiumiq.com/android/releases/"
+//                credentials(AwsCredentials) {
+//                    // Dummy credentials provided in project's gradle.properties; these will be overridden by your global settings in ~/.gradle/gradle.properties
+//                    accessKey AWS_ACCESS_KEY
+//                    secretKey AWS_SECRET_KEY
+//                    sessionToken AWS_SESSION_TOKEN
+//                }
 //            }
 //        }
-//    }
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "com.tealium:remotecommands:1.0.0"
-    api "com.contentsquare.android:library:4.7.0"
+    api "com.tealium:remotecommands:1.0.1"
+    api "com.contentsquare.android:library:4.9.0"
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.core:core-ktx:1.0.2'
     testImplementation 'junit:junit:4.12'
-    testImplementation "org.robolectric:robolectric:4.2"
+    testImplementation "org.robolectric:robolectric:4.6.1"
     testImplementation "io.mockk:mockk:$mockk_version"
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
