@@ -1,28 +1,25 @@
 package com.tealium.remotecommands.contentsquare
 
-import Commands
-import DynamicVar
-import ScreenView
-import TransactionProperties
 import android.app.Application
 import android.util.Log
 import com.tealium.remotecommands.RemoteCommand
 import org.json.JSONObject
+import java.util.*
 import kotlin.jvm.Throws
 
 open class ContentsquareRemoteCommand @JvmOverloads constructor(
-    application: Application? = null,
+    application: Application,
     commandId: String = DEFAULT_COMMAND_ID,
     description: String = DEFAULT_COMMAND_DESCRIPTION
-) : RemoteCommand(commandId, description) {
+) : RemoteCommand(commandId, description, BuildConfig.TEALIUM_CONTENTSQUARE_VERSION) {
 
     private val TAG = this::class.java.simpleName
     var contentsquareInstance: ContentsquareCommand = ContentsquareInstance(application)
 
     companion object {
-        val DEFAULT_COMMAND_ID = "contentsquare"
-        val DEFAULT_COMMAND_DESCRIPTION = "Contentsquare-Remote Command"
-        val REQUIRED_KEY = "key does not exist in the payload."
+        const val DEFAULT_COMMAND_ID = "contentsquare"
+        const val DEFAULT_COMMAND_DESCRIPTION = "Contentsquare-Remote Command"
+        const val REQUIRED_KEY = "key does not exist in the payload."
     }
 
     @Throws(Exception::class)
@@ -39,7 +36,7 @@ open class ContentsquareRemoteCommand @JvmOverloads constructor(
                 it.isEmpty()
             }
             .map {
-                it.trim().toLowerCase()
+                it.trim().lowercase(Locale.ROOT)
             }
             .toTypedArray()
     }

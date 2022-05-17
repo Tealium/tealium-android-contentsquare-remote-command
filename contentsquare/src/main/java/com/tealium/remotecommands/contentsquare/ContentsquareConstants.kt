@@ -1,5 +1,7 @@
 @file:JvmName("ContentsquareConstants")
 
+package com.tealium.remotecommands.contentsquare
+
 object Commands {
     const val COMMAND_KEY = "command_name"
     const val SEPARATOR = ","

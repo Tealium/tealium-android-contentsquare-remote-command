@@ -5,12 +5,11 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.1"
+    compileSdkVersion 32
     defaultConfig {
         applicationId "com.tealium.example"
         minSdkVersion 21
-        targetSdkVersion 29
+        targetSdkVersion 32
         versionCode 1
         versionName "1.0"
         buildConfigField 'String', 'TAG', "\"App\""
@@ -32,10 +31,10 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation "com.tealium:kotlin-core:$tealium_core_version"
-    implementation "com.tealium:kotlin-lifecycle:1.0.0"
+    implementation "com.tealium:kotlin-lifecycle:$tealium_lifecycle_version"
     implementation "com.tealium:kotlin-remotecommand-dispatcher:$tealium_remotecommand_dispatcher_version"
     implementation "com.tealium:kotlin-tagmanagement-dispatcher:$tealium_tagmanagement_dispatcher_version"
-    releaseImplementation 'com.tealium.remotecommands:contentsquare:1.0.0'
+    releaseImplementation "com.tealium.remotecommands:contentsquare:$tealium_contentsquare_version"
     debugImplementation project(path: ':contentsquare')
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.core:core-ktx:1.0.2'

@@ -1,7 +1,5 @@
 package com.tealium.remotecommands.contentsquare
 
-import TransactionProperties
-import ScreenView
 import io.mockk.*
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
@@ -19,7 +17,7 @@ class ContentsquareRemoteCommandTest {
     lateinit var mockCommand: ContentsquareCommand
 
     @InjectMockKs
-    var contentsquareRemoteCommand: ContentsquareRemoteCommand = ContentsquareRemoteCommand(null)
+    var contentsquareRemoteCommand: ContentsquareRemoteCommand = ContentsquareRemoteCommand(mockk())
 
     @Before
     fun setUp() {
