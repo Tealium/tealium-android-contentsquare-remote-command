@@ -2,7 +2,6 @@ package com.tealium.example
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.contentsquare.android.Contentsquare
 
 class ScreenViewActivity : AppCompatActivity() {
 
