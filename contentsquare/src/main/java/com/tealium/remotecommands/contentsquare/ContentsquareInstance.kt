@@ -2,8 +2,10 @@ package com.tealium.remotecommands.contentsquare
 
 import android.app.Application
 import android.util.Log
+import android.view.View
 import com.contentsquare.android.Contentsquare
 import com.contentsquare.android.api.Currencies
+import com.contentsquare.android.api.model.CustomVar
 import com.contentsquare.android.api.model.Transaction
 import org.json.JSONObject
 import java.util.*
@@ -42,6 +44,33 @@ class ContentsquareInstance(private val application: Application) : Contentsquar
         }
     }
 
+    override fun sendUserIdentifier(userId: String) {
+        Log.d(TAG, "Sending user identifier: $userId")
+        Contentsquare.sendUserIdentifier(userId)
+    }
+
+    override fun sendCustomVars(screenName: String, customVars: Array<JSONObject>) {
+        Log.d(TAG, "Sending custom variables for screen: $screenName")
+        val csCustomVars = customVars.mapNotNull { json ->
+            val index = json.optInt(CustomVars.INDEX, -1)
+            val name = json.optString(CustomVars.NAME)
+            val value = json.optString(CustomVars.VALUE)
+            
+            if (index >= 0 && name.isNotEmpty() && value.isNotEmpty()) {
+                CustomVar(index, name, value)
+            } else {
+                Log.e(TAG, "Invalid custom var: $json")
+                null
+            }
+        }.toTypedArray()
+        
+        if (csCustomVars.isNotEmpty()) {
+            Contentsquare.send(screenName, csCustomVars)
+        } else {
+            Log.d(TAG, "No valid custom vars to send")
+        }
+    }
+
     override fun stopTracking() {
         Contentsquare.stopTracking()
     }
@@ -55,10 +84,10 @@ class ContentsquareInstance(private val application: Application) : Contentsquar
     }
 
     override fun optIn() {
-        Contentsquare.optIn(application.applicationContext)
+        Contentsquare.optIn()
     }
 
     override fun optOut() {
-        Contentsquare.optOut(application.applicationContext)
+        Contentsquare.optOut()
     }
 }

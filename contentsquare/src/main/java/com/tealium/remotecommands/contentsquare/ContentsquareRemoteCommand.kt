@@ -85,6 +85,32 @@ open class ContentsquareRemoteCommand @JvmOverloads constructor(
                         Log.e(TAG, "${DynamicVar.DYNAMIC_VAR} $REQUIRED_KEY")
                     }
                 }
+                Commands.SEND_USER_IDENTIFIER -> {
+                    val userIdentifier = payload.optString(UserIdentifier.USER_IDENTIFIER)
+                    if (userIdentifier.isNotEmpty()) {
+                        contentsquareInstance.sendUserIdentifier(userIdentifier)
+                    } else {
+                        Log.e(TAG, "${UserIdentifier.USER_IDENTIFIER} $REQUIRED_KEY")
+                    }
+                }
+                Commands.SEND_CUSTOM_VARS -> {
+                    val screenName = payload.optString(ScreenView.NAME)
+                    val customVarsArray = payload.optJSONArray(CustomVars.CUSTOM_VARS)
+                    
+                    if (screenName.isNotEmpty() && customVarsArray != null && customVarsArray.length() > 0) {
+                        val customVars = Array(customVarsArray.length()) { i ->
+                            customVarsArray.optJSONObject(i)
+                        }
+                        contentsquareInstance.sendCustomVars(screenName, customVars)
+                    } else {
+                        if (screenName.isEmpty()) {
+                            Log.e(TAG, "${ScreenView.NAME} $REQUIRED_KEY")
+                        }
+                        if (customVarsArray == null || customVarsArray.length() == 0) {
+                            Log.e(TAG, "${CustomVars.CUSTOM_VARS} $REQUIRED_KEY")
+                        }
+                    }
+                }
                 Commands.STOP_TRACKING -> {
                     contentsquareInstance.stopTracking()
                 }

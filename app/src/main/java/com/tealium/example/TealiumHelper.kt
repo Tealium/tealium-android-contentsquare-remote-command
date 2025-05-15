@@ -1,8 +1,6 @@
 package com.tealium.example
 
 import android.app.Application
-import android.os.Build
-import android.webkit.WebView
 import com.tealium.core.Dispatchers
 import com.tealium.core.Environment
 import com.tealium.core.Tealium
@@ -15,8 +13,8 @@ import com.tealium.remotecommands.contentsquare.ContentsquareRemoteCommand
 
 object TealiumHelper {
 
-    const val instanceName = "my_instance"
-    lateinit var tealium: Tealium
+    private const val INSTANCE_NAME = "my_instance"
+    private lateinit var tealium: Tealium
 
     fun initialize(application: Application) {
         val config = TealiumConfig(
@@ -32,7 +30,7 @@ object TealiumHelper {
             // JSON controlled RemoteCommand
             dispatchers.add(Dispatchers.RemoteCommands)
         }
-        tealium = Tealium.create(instanceName, config) {
+        tealium = Tealium.create(INSTANCE_NAME, config) {
             val remoteCommand = ContentsquareRemoteCommand(application)
             tealium.remoteCommands?.add(remoteCommand, "contentsquare.json")
         }

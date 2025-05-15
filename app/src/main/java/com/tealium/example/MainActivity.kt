@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.tealium.remotecommands.contentsquare.DynamicVar
 import com.tealium.remotecommands.contentsquare.TransactionProperties
+import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
 
@@ -41,11 +42,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun onClick(v: View?) {
-            when (adapterPosition) {
+            when (bindingAdapterPosition) {
                 0 -> startActivity(Intent(this@MainActivity, ScreenViewActivity::class.java))
                 1 -> sendTransaction()
                 2 -> sendDynamicVar()
-                3 -> startActivity(Intent(this@MainActivity, MiscellaneousActivity::class.java))
+                3 -> sendUserIdentifier()
+                4 -> sendCustomVars()
+                5 -> startActivity(Intent(this@MainActivity, MiscellaneousActivity::class.java))
             }
         }
 
@@ -69,6 +72,33 @@ class MainActivity : AppCompatActivity() {
                 )
             )
         }
+        
+        private fun sendUserIdentifier() {
+            TealiumHelper.trackEvent("user_identifier", mapOf(
+                "user_identifier" to "user123"
+            ))
+        }
+        
+        private fun sendCustomVars() {
+            val customVar1 = JSONObject().apply {
+                put("index", 0)
+                put("name", "category")
+                put("value", "electronics")
+            }
+            
+            val customVar2 = JSONObject().apply {
+                put("index", 1)
+                put("name", "user_type")
+                put("value", "premium")
+            }
+            
+            val customVarsArray = arrayOf(customVar1, customVar2)
+            
+            TealiumHelper.trackEvent("custom_vars", mapOf(
+                "screen" to "main", // needed for the screen name
+                "custom_vars" to customVarsArray
+            ))
+        }
     }
 
     private inner class ListAdapter : RecyclerView.Adapter<ListViewHolder>() {
@@ -76,6 +106,8 @@ class MainActivity : AppCompatActivity() {
             "Screen Views",
             "Transactions",
             "Dynamic Variables",
+            "User Identifier",
+            "Custom Variables",
             "Miscellaneous"
         )
 

@@ -9,6 +9,8 @@ object Commands {
     const val SEND_SCREEN_VIEW = "sendscreenview"
     const val SEND_TRANSACTION = "sendtransaction"
     const val SEND_DYNAMIC_VAR = "senddynamicvar"
+    const val SEND_USER_IDENTIFIER = "senduseridentifier"
+    const val SEND_CUSTOM_VARS = "sendcustomvars"
     const val STOP_TRACKING = "stoptracking"
     const val RESUME_TRACKING = "resumetracking"
     const val FORGET_ME = "forgetme"
@@ -30,4 +32,15 @@ object TransactionProperties {
 
 object DynamicVar {
     const val DYNAMIC_VAR = "dynamic_var"
+}
+
+object UserIdentifier {
+    const val USER_IDENTIFIER = "user_identifier"
+}
+
+object CustomVars {
+    const val CUSTOM_VARS = "custom_vars"
+    const val INDEX = "index"
+    const val NAME = "name"
+    const val VALUE = "value"
 }
