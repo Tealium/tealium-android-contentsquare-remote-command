@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
 
     private inner class ListViewHolder(view: View) : RecyclerView.ViewHolder(view),
         View.OnClickListener {
-        val nameTextView = itemView.findViewById(R.id.nameTextView) as TextView
+        val nameTextView: TextView = itemView.findViewById(R.id.nameTextView)
 
         init {
             itemView.setOnClickListener(this)

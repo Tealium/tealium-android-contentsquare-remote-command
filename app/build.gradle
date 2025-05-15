@@ -51,7 +51,7 @@ dependencies {
     releaseImplementation "com.tealium.remotecommands:contentsquare:$tealium_contentsquare_version"
     debugImplementation project(path: ':contentsquare')
 
-    // AndroidX dependencies - kompatybilne wersje dla compileSdk 33
+    // AndroidX dependencies
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
@@ -59,6 +59,6 @@ dependencies {
 
     // Test dependencies
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test:runner:1.5.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    androidTestImplementation 'androidx.test:runner:1.6.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
 }
