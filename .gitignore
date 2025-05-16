@@ -254,3 +254,4 @@ fabric.properties
 # End of https://www.gitignore.io/api/java,gradle,kotlin,android,androidstudio
 **/.claude/settings.local.json
 .vscode/
+.idea/
