@@ -55,11 +55,11 @@ class ContentsquareInstance(private val application: Application) : Contentsquar
             val index = json.optInt(CustomVars.INDEX, -1)
             val name = json.optString(CustomVars.NAME)
             val value = json.optString(CustomVars.VALUE)
-            
-            if (index >= 0 && name.isNotEmpty() && value.isNotEmpty()) {
+
+            if (index in 1..20) {
                 CustomVar(index, name, value)
             } else {
-                Log.e(TAG, "Invalid custom var: $json")
+                Log.e(TAG, "Invalid custom var index: $index (must be 1..20). Skipping: $json")
                 null
             }
         }.toTypedArray()
