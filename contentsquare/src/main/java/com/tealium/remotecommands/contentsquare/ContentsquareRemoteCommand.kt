@@ -45,14 +45,21 @@ open class ContentsquareRemoteCommand @JvmOverloads constructor(
         commands.forEach { command ->
             when (command) {
                 Commands.SEND_SCREEN_VIEW -> {
-                    payload.optString(ScreenView.NAME).also {
-                        if (it.isNotEmpty()) {
-                            Log.d(TAG, "Sending screenview $it")
-                            contentsquareInstance.send(it)
+                    val screenName = payload.optString(ScreenView.NAME)
+                    val customVarsArray = payload.optJSONArray(CustomVars.CUSTOM_VARS)
+                    
+                    if (screenName.isNotEmpty()) {
+                        if (customVarsArray != null && customVarsArray.length() > 0) {
+                            val customVars = Array(customVarsArray.length()) { i ->
+                                customVarsArray.optJSONObject(i)
+                            }
+                            Log.d(TAG, "Sending screenview $screenName with custom vars")
+                            contentsquareInstance.send(screenName, customVars)
                         } else {
-                            Log.d(TAG, "Not sending screenview, ${ScreenView.NAME} was empty")
+                            Log.d(TAG, "Sending screenview $screenName")
+                            contentsquareInstance.send(screenName)
                         }
-                    } ?: run {
+                    } else {
                         Log.e(TAG, "${ScreenView.NAME} $REQUIRED_KEY")
                     }
                 }
@@ -91,24 +98,6 @@ open class ContentsquareRemoteCommand @JvmOverloads constructor(
                         contentsquareInstance.sendUserIdentifier(userIdentifier)
                     } else {
                         Log.e(TAG, "${UserIdentifier.USER_IDENTIFIER} $REQUIRED_KEY")
-                    }
-                }
-                Commands.SEND_CUSTOM_VARS -> {
-                    val screenName = payload.optString(ScreenView.NAME)
-                    val customVarsArray = payload.optJSONArray(CustomVars.CUSTOM_VARS)
-                    
-                    if (screenName.isNotEmpty() && customVarsArray != null && customVarsArray.length() > 0) {
-                        val customVars = Array(customVarsArray.length()) { i ->
-                            customVarsArray.optJSONObject(i)
-                        }
-                        contentsquareInstance.sendCustomVars(screenName, customVars)
-                    } else {
-                        if (screenName.isEmpty()) {
-                            Log.e(TAG, "${ScreenView.NAME} $REQUIRED_KEY")
-                        }
-                        if (customVarsArray == null || customVarsArray.length() == 0) {
-                            Log.e(TAG, "${CustomVars.CUSTOM_VARS} $REQUIRED_KEY")
-                        }
                     }
                 }
                 Commands.STOP_TRACKING -> {

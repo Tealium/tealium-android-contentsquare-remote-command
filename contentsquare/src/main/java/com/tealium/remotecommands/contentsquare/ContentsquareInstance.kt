@@ -14,8 +14,31 @@ class ContentsquareInstance(private val application: Application) : Contentsquar
 
     private val TAG = this::class.java.simpleName
 
-    override fun send(screenName: String) {
-        Contentsquare.send(screenName)
+    override fun send(screenName: String, customVars: Array<JSONObject>?) {
+        if (customVars != null && customVars.isNotEmpty()) {
+            Log.d(TAG, "Sending custom variables for screen: $screenName")
+            val csCustomVars = customVars.mapNotNull { json ->
+                val index = json.optInt(CustomVars.INDEX, -1)
+                val name = json.optString(CustomVars.NAME)
+                val value = json.optString(CustomVars.VALUE)
+
+                if (index > 0) {
+                    CustomVar(index, name, value)
+                } else {
+                    Log.e(TAG, "Invalid custom var index: $index (must be positive). Skipping: $json")
+                    null
+                }
+            }.toTypedArray()
+            
+            if (csCustomVars.isNotEmpty()) {
+                Contentsquare.send(screenName, csCustomVars)
+            } else {
+                Log.d(TAG, "No valid custom vars to send, sending regular screen view")
+                Contentsquare.send(screenName)
+            }
+        } else {
+            Contentsquare.send(screenName)
+        }
     }
 
     override fun sendTransaction(amount: Float, currency: String, id: String?) {
@@ -47,28 +70,6 @@ class ContentsquareInstance(private val application: Application) : Contentsquar
     override fun sendUserIdentifier(userId: String) {
         Log.d(TAG, "Sending user identifier: $userId")
         Contentsquare.sendUserIdentifier(userId)
-    }
-
-    override fun sendCustomVars(screenName: String, customVars: Array<JSONObject>) {
-        Log.d(TAG, "Sending custom variables for screen: $screenName")
-        val csCustomVars = customVars.mapNotNull { json ->
-            val index = json.optInt(CustomVars.INDEX, -1)
-            val name = json.optString(CustomVars.NAME)
-            val value = json.optString(CustomVars.VALUE)
-
-            if (index in 1..20) {
-                CustomVar(index, name, value)
-            } else {
-                Log.e(TAG, "Invalid custom var index: $index (must be 1..20). Skipping: $json")
-                null
-            }
-        }.toTypedArray()
-        
-        if (csCustomVars.isNotEmpty()) {
-            Contentsquare.send(screenName, csCustomVars)
-        } else {
-            Log.d(TAG, "No valid custom vars to send")
-        }
     }
 
     override fun stopTracking() {

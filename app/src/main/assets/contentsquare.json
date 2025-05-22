@@ -19,7 +19,6 @@
     "opt_in": "optin",
     "opt_out": "optout",
     "user_identifier": "senduseridentifier",
-    "custom_vars": "sendcustomvars",
     "user_login": "senddynamicvar",
     "join_group": "senddynamicvar,stoptracking",
     "show_offers": "resumetracking",

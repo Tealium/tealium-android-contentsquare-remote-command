@@ -57,6 +57,53 @@ class ContentsquareRemoteCommandTest {
     }
 
     @Test
+    fun sendScreenViewWithCustomVarsCalledWithKeys() {
+        val customVar1 = JSONObject()
+        customVar1.put(CustomVars.INDEX, 1)
+        customVar1.put(CustomVars.NAME, "category")
+        customVar1.put(CustomVars.VALUE, "electronics")
+        
+        val customVarsArray = JSONArray().put(customVar1)
+        
+        val payload = JSONObject()
+        payload.put(ScreenView.NAME, "testScreen")
+        payload.put(CustomVars.CUSTOM_VARS, customVarsArray)
+        
+        every { mockCommand.send(any(), any()) } just Runs
+        
+        contentsquareRemoteCommand.parseCommands(arrayOf(Commands.SEND_SCREEN_VIEW), payload)
+        
+        verify {
+            mockCommand.send("testScreen", match { vars -> 
+                vars != null && vars.size == 1 && vars[0].has(CustomVars.INDEX) 
+            })
+        }
+        confirmVerified(mockCommand)
+    }
+    
+    @Test
+    fun sendScreenViewWithCustomVarsNotCalledWithoutScreenName() {
+        val customVar1 = JSONObject()
+        customVar1.put(CustomVars.INDEX, 1)
+        customVar1.put(CustomVars.NAME, "category")
+        customVar1.put(CustomVars.VALUE, "electronics")
+        
+        val customVarsArray = JSONArray().put(customVar1)
+        
+        val payload = JSONObject()
+        payload.put(CustomVars.CUSTOM_VARS, customVarsArray)
+        
+        every { mockCommand.send(any(), any()) } just Runs
+        
+        contentsquareRemoteCommand.parseCommands(arrayOf(Commands.SEND_SCREEN_VIEW), payload)
+        
+        verify {
+            mockCommand wasNot Called
+        }
+        confirmVerified(mockCommand)
+    }
+
+    @Test
     fun sendTransactionCalledWithPayloadKey() {
         val innerPayload = JSONObject()
         innerPayload.put(TransactionProperties.PRICE, 10.99)
@@ -212,66 +259,6 @@ class ContentsquareRemoteCommandTest {
 
         contentsquareRemoteCommand.parseCommands(arrayOf(Commands.SEND_USER_IDENTIFIER), payload)
 
-        verify {
-            mockCommand wasNot Called
-        }
-        confirmVerified(mockCommand)
-    }
-    
-    @Test
-    fun sendCustomVarsCalledWithValidData() {
-        val customVar1 = JSONObject()
-        customVar1.put(CustomVars.INDEX, 0)
-        customVar1.put(CustomVars.NAME, "category")
-        customVar1.put(CustomVars.VALUE, "electronics")
-        
-        val customVarsArray = JSONArray().put(customVar1)
-        
-        val payload = JSONObject()
-        payload.put(ScreenView.NAME, "testScreen")
-        payload.put(CustomVars.CUSTOM_VARS, customVarsArray)
-        
-        every { mockCommand.sendCustomVars(any(), any()) } just Runs
-        
-        contentsquareRemoteCommand.parseCommands(arrayOf(Commands.SEND_CUSTOM_VARS), payload)
-        
-        verify {
-            mockCommand.sendCustomVars("testScreen", any())
-        }
-        confirmVerified(mockCommand)
-    }
-    
-    @Test
-    fun sendCustomVarsNotCalledWithoutScreenName() {
-        val customVar1 = JSONObject()
-        customVar1.put(CustomVars.INDEX, 0)
-        customVar1.put(CustomVars.NAME, "category")
-        customVar1.put(CustomVars.VALUE, "electronics")
-        
-        val customVarsArray = JSONArray().put(customVar1)
-        
-        val payload = JSONObject()
-        payload.put(CustomVars.CUSTOM_VARS, customVarsArray)
-        
-        every { mockCommand.sendCustomVars(any(), any()) } just Runs
-        
-        contentsquareRemoteCommand.parseCommands(arrayOf(Commands.SEND_CUSTOM_VARS), payload)
-        
-        verify {
-            mockCommand wasNot Called
-        }
-        confirmVerified(mockCommand)
-    }
-    
-    @Test
-    fun sendCustomVarsNotCalledWithoutCustomVars() {
-        val payload = JSONObject()
-        payload.put(ScreenView.NAME, "testScreen")
-        
-        every { mockCommand.sendCustomVars(any(), any()) } just Runs
-        
-        contentsquareRemoteCommand.parseCommands(arrayOf(Commands.SEND_CUSTOM_VARS), payload)
-        
         verify {
             mockCommand wasNot Called
         }

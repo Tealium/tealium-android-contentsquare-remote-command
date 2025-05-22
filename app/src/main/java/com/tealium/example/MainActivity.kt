@@ -81,21 +81,21 @@ class MainActivity : AppCompatActivity() {
         
         private fun sendCustomVars() {
             val customVar1 = JSONObject().apply {
-                put("index", 0)
+                put("index", 1)
                 put("name", "category")
                 put("value", "electronics")
             }
             
             val customVar2 = JSONObject().apply {
-                put("index", 1)
+                put("index", 2)
                 put("name", "user_type")
                 put("value", "premium")
             }
             
             val customVarsArray = arrayOf(customVar1, customVar2)
             
-            TealiumHelper.trackEvent("custom_vars", mapOf(
-                "screen" to "main", // needed for the screen name
+            TealiumHelper.trackEvent("screen_title", mapOf(
+                "screen" to "Custom Variables Screen",
                 "custom_vars" to customVarsArray
             ))
         }
