@@ -40,7 +40,7 @@ object UserIdentifier {
 
 object CustomVars {
     const val CUSTOM_VARS = "custom_vars"
-    const val INDEX = "index"
-    const val NAME = "name"
-    const val VALUE = "value"
+    const val INDEXES = "indexes"
+    const val NAMES = "names"
+    const val VALUES = "values"
 }

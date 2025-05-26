@@ -18,9 +18,9 @@ class ContentsquareInstance(private val application: Application) : Contentsquar
         if (customVars != null && customVars.isNotEmpty()) {
             Log.d(TAG, "Sending custom variables for screen: $screenName")
             val csCustomVars = customVars.mapNotNull { json ->
-                val index = json.optInt(CustomVars.INDEX, -1)
-                val name = json.optString(CustomVars.NAME)
-                val value = json.optString(CustomVars.VALUE)
+                val index = json.optInt("index", -1)
+                val name = json.optString("name")
+                val value = json.optString("value")
 
                 if (index > 0) {
                     CustomVar(index, name, value)

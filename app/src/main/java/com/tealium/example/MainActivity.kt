@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.tealium.remotecommands.contentsquare.DynamicVar
 import com.tealium.remotecommands.contentsquare.TransactionProperties
-import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
 
@@ -80,23 +79,16 @@ class MainActivity : AppCompatActivity() {
         }
         
         private fun sendCustomVars() {
-            val customVar1 = JSONObject().apply {
-                put("index", 1)
-                put("name", "category")
-                put("value", "electronics")
-            }
-            
-            val customVar2 = JSONObject().apply {
-                put("index", 2)
-                put("name", "user_type")
-                put("value", "premium")
-            }
-            
-            val customVarsArray = arrayOf(customVar1, customVar2)
+            // Use the same format as iOS - object of arrays (JSON mapping format)
+            val indexes = arrayOf(1, 2)
+            val names = arrayOf("category", "user_type")
+            val values = arrayOf("electronics", "premium")
             
             TealiumHelper.trackEvent("screen_title", mapOf(
                 "screen" to "Custom Variables Screen",
-                "custom_vars" to customVarsArray
+                "custom_var_indexes" to indexes,
+                "custom_var_names" to names,
+                "custom_var_values" to values
             ))
         }
     }

@@ -46,13 +46,15 @@ open class ContentsquareRemoteCommand @JvmOverloads constructor(
             when (command) {
                 Commands.SEND_SCREEN_VIEW -> {
                     val screenName = payload.optString(ScreenView.NAME)
-                    val customVarsArray = payload.optJSONArray(CustomVars.CUSTOM_VARS)
                     
                     if (screenName.isNotEmpty()) {
-                        if (customVarsArray != null && customVarsArray.length() > 0) {
-                            val customVars = Array(customVarsArray.length()) { i ->
-                                customVarsArray.optJSONObject(i)
-                            }
+                        // Handle JSON mapping format (object of arrays) - same as iOS
+                        val customVarsObject = payload.optJSONObject(CustomVars.CUSTOM_VARS)
+                        val customVars = customVarsObject?.let { 
+                            customVarsFromArrays(it)
+                        }
+                        
+                        if (customVars != null && customVars.isNotEmpty()) {
                             Log.d(TAG, "Sending screenview $screenName with custom vars")
                             contentsquareInstance.send(screenName, customVars)
                         } else {
@@ -117,5 +119,32 @@ open class ContentsquareRemoteCommand @JvmOverloads constructor(
                 }
             }
         }
+    }
+
+    private fun customVarsFromArrays(customVarsObject: JSONObject): Array<JSONObject> {
+        val indexes = customVarsObject.optJSONArray(CustomVars.INDEXES)
+        val names = customVarsObject.optJSONArray(CustomVars.NAMES)
+        val values = customVarsObject.optJSONArray(CustomVars.VALUES)
+        
+        val count = indexes?.length() ?: 0
+        val customVars = mutableListOf<JSONObject>()
+        
+        for (i in 0 until count) {
+            val customVar = JSONObject()
+            
+            if (indexes != null && i < indexes.length()) {
+                customVar.put("index", indexes.opt(i))
+            }
+            if (names != null && i < names.length()) {
+                customVar.put("name", names.opt(i))
+            }
+            if (values != null && i < values.length()) {
+                customVar.put("value", values.opt(i))
+            }
+            
+            customVars.add(customVar)
+        }
+        
+        return customVars.toTypedArray()
     }
 }

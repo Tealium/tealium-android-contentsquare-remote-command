@@ -7,7 +7,9 @@
     "order_currency": "purchase.currency",
     "order_id": "purchase.transaction_id",
     "user_identifier": "user_identifier",
-    "custom_vars": "custom_vars"
+    "custom_var_indexes": "custom_vars.indexes",
+    "custom_var_names": "custom_vars.names",
+    "custom_var_values": "custom_vars.values"
   },
   "commands": {
     "screen_title": "sendscreenview",
