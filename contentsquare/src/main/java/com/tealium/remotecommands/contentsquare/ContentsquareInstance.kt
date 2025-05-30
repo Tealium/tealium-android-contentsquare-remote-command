@@ -15,30 +15,32 @@ class ContentsquareInstance(private val application: Application) : Contentsquar
     private val TAG = this::class.java.simpleName
 
     override fun send(screenName: String, customVars: Array<JSONObject>?) {
-        if (customVars != null && customVars.isNotEmpty()) {
+        if (!customVars.isNullOrEmpty()) {
             Log.d(TAG, "Sending custom variables for screen: $screenName")
-            val csCustomVars = customVars.mapNotNull { json ->
-                val index = json.optInt("index", -1)
-                val name = json.optString("name")
-                val value = json.optString("value")
-
-                if (index > 0) {
-                    CustomVar(index, name, value)
-                } else {
-                    Log.e(TAG, "Invalid custom var index: $index (must be positive). Skipping: $json")
-                    null
-                }
-            }.toTypedArray()
+            val csCustomVars = customVars.mapNotNull(::jsonObjectToCustomVar).toTypedArray()
             
             if (csCustomVars.isNotEmpty()) {
                 Contentsquare.send(screenName, csCustomVars)
-            } else {
-                Log.d(TAG, "No valid custom vars to send, sending regular screen view")
-                Contentsquare.send(screenName)
+                return
             }
-        } else {
-            Contentsquare.send(screenName)
+            
+            Log.d(TAG, "No valid custom vars to send, sending regular screen view")
         }
+
+        Contentsquare.send(screenName)
+    }
+
+    private fun jsonObjectToCustomVar(json: JSONObject): CustomVar? {
+        val index = json.optInt("index", -1)
+        if (index <= 0) {
+            Log.e(TAG, "Invalid custom var index: $index (must be positive). Skipping: $json")
+            return null
+        }
+
+        val name = json.optString("name")
+        val value = json.optString("value")
+
+        return CustomVar(index, name, value)
     }
 
     override fun sendTransaction(amount: Float, currency: String, id: String?) {

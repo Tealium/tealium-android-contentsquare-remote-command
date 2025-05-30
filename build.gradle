@@ -7,7 +7,7 @@ buildscript {
     ext.tealium_remotecommand_dispatcher_version = '1.5.2'
     ext.tealium_tagmanagement_dispatcher_version = '1.2.5'
     ext.tealium_lifecycle_version = '1.2.2'
-    ext.tealium_contentsquare_version = '2.2.1'
+    ext.tealium_contentsquare_version = '2.3.0'
     ext.contentsquare_version = ":[4.38, 5.0)"
     repositories {
         google()

@@ -10,7 +10,6 @@ object Commands {
     const val SEND_TRANSACTION = "sendtransaction"
     const val SEND_DYNAMIC_VAR = "senddynamicvar"
     const val SEND_USER_IDENTIFIER = "senduseridentifier"
-    const val SEND_CUSTOM_VARS = "sendcustomvars"
     const val STOP_TRACKING = "stoptracking"
     const val RESUME_TRACKING = "resumetracking"
     const val FORGET_ME = "forgetme"
