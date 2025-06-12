@@ -12,7 +12,7 @@
 ## Documentation
 For full documentation, please see the Tealium Learning Community: 
 
-[https://docs.tealium.com/platforms/remote-commands/integrations/braze/](https://docs.tealium.com/platforms/remote-commands/integrations/contentsquare/)
+[https://docs.tealium.com/platforms/remote-commands/integrations/contentsquare/](https://docs.tealium.com/platforms/remote-commands/integrations/contentsquare/)
 
 ## License
 

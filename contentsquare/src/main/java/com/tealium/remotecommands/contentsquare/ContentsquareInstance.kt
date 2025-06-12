@@ -2,8 +2,10 @@ package com.tealium.remotecommands.contentsquare
 
 import android.app.Application
 import android.util.Log
+import android.view.View
 import com.contentsquare.android.Contentsquare
 import com.contentsquare.android.api.Currencies
+import com.contentsquare.android.api.model.CustomVar
 import com.contentsquare.android.api.model.Transaction
 import org.json.JSONObject
 import java.util.*
@@ -12,8 +14,33 @@ class ContentsquareInstance(private val application: Application) : Contentsquar
 
     private val TAG = this::class.java.simpleName
 
-    override fun send(screenName: String) {
+    override fun send(screenName: String, customVars: Array<JSONObject>?) {
+        if (!customVars.isNullOrEmpty()) {
+            Log.d(TAG, "Sending custom variables for screen: $screenName")
+            val csCustomVars = customVars.mapNotNull(::jsonObjectToCustomVar).toTypedArray()
+            
+            if (csCustomVars.isNotEmpty()) {
+                Contentsquare.send(screenName, csCustomVars)
+                return
+            }
+            
+            Log.d(TAG, "No valid custom vars to send, sending regular screen view")
+        }
+
         Contentsquare.send(screenName)
+    }
+
+    private fun jsonObjectToCustomVar(json: JSONObject): CustomVar? {
+        val index = json.optInt("index", -1)
+        if (index <= 0) {
+            Log.e(TAG, "Invalid custom var index: $index (must be positive). Skipping: $json")
+            return null
+        }
+
+        val name = json.optString("name")
+        val value = json.optString("value")
+
+        return CustomVar(index, name, value)
     }
 
     override fun sendTransaction(amount: Float, currency: String, id: String?) {
@@ -42,6 +69,11 @@ class ContentsquareInstance(private val application: Application) : Contentsquar
         }
     }
 
+    override fun sendUserIdentifier(userId: String) {
+        Log.d(TAG, "Sending user identifier: $userId")
+        Contentsquare.sendUserIdentifier(userId)
+    }
+
     override fun stopTracking() {
         Contentsquare.stopTracking()
     }
@@ -55,10 +87,10 @@ class ContentsquareInstance(private val application: Application) : Contentsquar
     }
 
     override fun optIn() {
-        Contentsquare.optIn(application.applicationContext)
+        Contentsquare.optIn()
     }
 
     override fun optOut() {
-        Contentsquare.optOut(application.applicationContext)
+        Contentsquare.optOut()
     }
 }

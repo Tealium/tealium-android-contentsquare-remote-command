@@ -5,7 +5,11 @@
     "dynamic_var": "dynamic_var",
     "order_total": "purchase.price",
     "order_currency": "purchase.currency",
-    "order_id": "purchase.transaction_id"
+    "order_id": "purchase.transaction_id",
+    "user_identifier": "user_identifier",
+    "custom_var_indexes": "custom_vars.indexes",
+    "custom_var_names": "custom_vars.names",
+    "custom_var_values": "custom_vars.values"
   },
   "commands": {
     "screen_title": "sendscreenview",
@@ -16,6 +20,7 @@
     "forget_me": "forgetme",
     "opt_in": "optin",
     "opt_out": "optout",
+    "user_identifier": "senduseridentifier",
     "user_login": "senddynamicvar",
     "join_group": "senddynamicvar,stoptracking",
     "show_offers": "resumetracking",

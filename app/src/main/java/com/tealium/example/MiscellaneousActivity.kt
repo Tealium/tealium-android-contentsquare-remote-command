@@ -6,7 +6,7 @@ import com.tealium.example.databinding.ActivityMiscellaneousBinding
 
 class MiscellaneousActivity : AppCompatActivity() {
 
-    lateinit var binding: ActivityMiscellaneousBinding
+    private lateinit var binding: ActivityMiscellaneousBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

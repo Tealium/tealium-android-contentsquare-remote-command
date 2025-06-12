@@ -45,14 +45,23 @@ open class ContentsquareRemoteCommand @JvmOverloads constructor(
         commands.forEach { command ->
             when (command) {
                 Commands.SEND_SCREEN_VIEW -> {
-                    payload.optString(ScreenView.NAME).also {
-                        if (it.isNotEmpty()) {
-                            Log.d(TAG, "Sending screenview $it")
-                            contentsquareInstance.send(it)
-                        } else {
-                            Log.d(TAG, "Not sending screenview, ${ScreenView.NAME} was empty")
+                    val screenName = payload.optString(ScreenView.NAME)
+                    
+                    if (screenName.isNotEmpty()) {
+                        // Handle JSON mapping format (object of arrays) - same as iOS
+                        val customVarsObject = payload.optJSONObject(CustomVars.CUSTOM_VARS)
+                        val customVars = customVarsObject?.let { 
+                            customVarsFromArrays(it)
                         }
-                    } ?: run {
+                        
+                        if (customVars != null && customVars.isNotEmpty()) {
+                            Log.d(TAG, "Sending screenview $screenName with custom vars")
+                            contentsquareInstance.send(screenName, customVars)
+                        } else {
+                            Log.d(TAG, "Sending screenview $screenName")
+                            contentsquareInstance.send(screenName)
+                        }
+                    } else {
                         Log.e(TAG, "${ScreenView.NAME} $REQUIRED_KEY")
                     }
                 }
@@ -85,6 +94,14 @@ open class ContentsquareRemoteCommand @JvmOverloads constructor(
                         Log.e(TAG, "${DynamicVar.DYNAMIC_VAR} $REQUIRED_KEY")
                     }
                 }
+                Commands.SEND_USER_IDENTIFIER -> {
+                    val userIdentifier = payload.optString(UserIdentifier.USER_IDENTIFIER)
+                    if (userIdentifier.isNotEmpty()) {
+                        contentsquareInstance.sendUserIdentifier(userIdentifier)
+                    } else {
+                        Log.e(TAG, "${UserIdentifier.USER_IDENTIFIER} $REQUIRED_KEY")
+                    }
+                }
                 Commands.STOP_TRACKING -> {
                     contentsquareInstance.stopTracking()
                 }
@@ -102,5 +119,32 @@ open class ContentsquareRemoteCommand @JvmOverloads constructor(
                 }
             }
         }
+    }
+
+    private fun customVarsFromArrays(customVarsObject: JSONObject): Array<JSONObject> {
+        val indexes = customVarsObject.optJSONArray(CustomVars.INDEXES)
+        val names = customVarsObject.optJSONArray(CustomVars.NAMES)
+        val values = customVarsObject.optJSONArray(CustomVars.VALUES)
+        
+        val count = indexes?.length() ?: 0
+        val customVars = mutableListOf<JSONObject>()
+        
+        for (i in 0 until count) {
+            val customVar = JSONObject()
+            
+            if (indexes != null && i < indexes.length()) {
+                customVar.put("index", indexes.opt(i))
+            }
+            if (names != null && i < names.length()) {
+                customVar.put("name", names.opt(i))
+            }
+            if (values != null && i < values.length()) {
+                customVar.put("value", values.opt(i))
+            }
+            
+            customVars.add(customVar)
+        }
+        
+        return customVars.toTypedArray()
     }
 }

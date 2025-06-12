@@ -34,18 +34,20 @@ class MainActivity : AppCompatActivity() {
 
     private inner class ListViewHolder(view: View) : RecyclerView.ViewHolder(view),
         View.OnClickListener {
-        val nameTextView = itemView.findViewById(R.id.nameTextView) as TextView
+        val nameTextView: TextView = itemView.findViewById(R.id.nameTextView)
 
         init {
             itemView.setOnClickListener(this)
         }
 
         override fun onClick(v: View?) {
-            when (adapterPosition) {
+            when (bindingAdapterPosition) {
                 0 -> startActivity(Intent(this@MainActivity, ScreenViewActivity::class.java))
                 1 -> sendTransaction()
                 2 -> sendDynamicVar()
-                3 -> startActivity(Intent(this@MainActivity, MiscellaneousActivity::class.java))
+                3 -> sendUserIdentifier()
+                4 -> sendCustomVars()
+                5 -> startActivity(Intent(this@MainActivity, MiscellaneousActivity::class.java))
             }
         }
 
@@ -69,6 +71,26 @@ class MainActivity : AppCompatActivity() {
                 )
             )
         }
+        
+        private fun sendUserIdentifier() {
+            TealiumHelper.trackEvent("user_identifier", mapOf(
+                "user_identifier" to "user123"
+            ))
+        }
+        
+        private fun sendCustomVars() {
+            // Use the same format as iOS - object of arrays (JSON mapping format)
+            val indexes = arrayOf(1, 2)
+            val names = arrayOf("category", "user_type")
+            val values = arrayOf("electronics", "premium")
+            
+            TealiumHelper.trackEvent("screen_title", mapOf(
+                "screen" to "Custom Variables Screen",
+                "custom_var_indexes" to indexes,
+                "custom_var_names" to names,
+                "custom_var_values" to values
+            ))
+        }
     }
 
     private inner class ListAdapter : RecyclerView.Adapter<ListViewHolder>() {
@@ -76,6 +98,8 @@ class MainActivity : AppCompatActivity() {
             "Screen Views",
             "Transactions",
             "Dynamic Variables",
+            "User Identifier",
+            "Custom Variables",
             "Miscellaneous"
         )
 
