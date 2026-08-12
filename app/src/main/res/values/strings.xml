@@ -3,6 +3,7 @@
     <string name="nameTextView">NameTextView</string>
     <string name="api_key">api key</string>
     <string name="track_screen">Track Screen</string>
+    <string name="screen_name_hint">Screen name</string>
     <string name="stop_tracking">Stop Tracking</string>
     <string name="resume_tracking">Resume Tracking</string>
     <string name="opt_in">Opt In</string>
@@ -10,4 +11,6 @@
     <string name="get_user_id">Get User Id</string>
     <string name="send_user_identifier">Send User Identifier</string>
     <string name="send_custom_vars">Send Custom Variables</string>
+    <string name="title_miscellaneous">Miscellaneous</string>
+    <string name="title_screen_views">Screen Views</string>
 </resources>
