@@ -82,10 +82,6 @@ class ContentsquareInstance(private val application: Application) : Contentsquar
         Contentsquare.resumeTracking()
     }
 
-    override fun forgetMe() {
-        Contentsquare.forgetMe()
-    }
-
     override fun optIn() {
         Contentsquare.optIn()
     }

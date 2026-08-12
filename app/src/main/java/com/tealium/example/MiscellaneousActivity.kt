@@ -22,10 +22,6 @@ class MiscellaneousActivity : AppCompatActivity() {
             TealiumHelper.trackEvent("resume_tracking")
         }
 
-        binding.forgetMeButton.setOnClickListener {
-            TealiumHelper.trackEvent("forget_me")
-        }
-
         binding.optInButton.setOnClickListener {
             TealiumHelper.trackEvent("opt_in")
         }

@@ -108,9 +108,6 @@ open class ContentsquareRemoteCommand @JvmOverloads constructor(
                 Commands.RESUME_TRACKING -> {
                     contentsquareInstance.resumeTracking()
                 }
-                Commands.FORGET_ME -> {
-                    contentsquareInstance.forgetMe()
-                }
                 Commands.OPT_IN -> {
                     contentsquareInstance.optIn()
                 }

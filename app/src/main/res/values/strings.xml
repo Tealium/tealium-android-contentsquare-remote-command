@@ -7,7 +7,6 @@
     <string name="resume_tracking">Resume Tracking</string>
     <string name="opt_in">Opt In</string>
     <string name="opt_out">Opt Out</string>
-    <string name="forget_me">Forget Me</string>
     <string name="get_user_id">Get User Id</string>
     <string name="send_user_identifier">Send User Identifier</string>
     <string name="send_custom_vars">Send Custom Variables</string>

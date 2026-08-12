@@ -31,18 +31,6 @@
         app:layout_constraintTop_toBottomOf="@+id/stopTrackingButton" />
 
     <Button
-        android:id="@+id/forgetMeButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/forget_me"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/resumeTrackingButton" />
-
-    <Button
         android:id="@+id/optInButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -52,7 +40,7 @@
         android:text="@string/opt_in"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/forgetMeButton" />
+        app:layout_constraintTop_toBottomOf="@+id/resumeTrackingButton" />
 
     <Button
         android:id="@+id/optOutButton"

@@ -318,20 +318,6 @@ class ContentsquareRemoteCommandTest {
     }
     
     @Test
-    fun forgetMeCalled() {
-        val payload = JSONObject()
-        
-        every { mockCommand.forgetMe() } just Runs
-        
-        contentsquareRemoteCommand.parseCommands(arrayOf(Commands.FORGET_ME), payload)
-        
-        verify {
-            mockCommand.forgetMe()
-        }
-        confirmVerified(mockCommand)
-    }
-    
-    @Test
     fun optInCalled() {
         val payload = JSONObject()
         

@@ -9,7 +9,6 @@ interface ContentsquareCommand {
     fun sendUserIdentifier(userId: String)
     fun stopTracking()
     fun resumeTracking()
-    fun forgetMe()
     fun optIn()
     fun optOut()
 }
