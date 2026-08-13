@@ -14,6 +14,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **BREAKING:** Raised the minimum supported Android API level (`minSdkVersion`) to 21, to match the Contentsquare SDK requirement.
 - Raised the Contentsquare SDK dependency floor to `4.52.1` (`:[4.52.1, 5.0)`).
 
+### Deprecated
+- The `application: Application` parameter in `ContentsquareRemoteCommand` constructors is deprecated and will be removed in a future version. Migrate to `ContentsquareRemoteCommand()` (or pass only `commandId`/`description` if needed).
+
 ## [2.3.0] - 2025-06-12
 
 ### Added
