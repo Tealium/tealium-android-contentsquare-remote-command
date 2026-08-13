@@ -18,7 +18,7 @@ class ContentsquareRemoteCommandTest {
     lateinit var mockCommand: ContentsquareCommand
 
     @InjectMockKs
-    var contentsquareRemoteCommand: ContentsquareRemoteCommand = ContentsquareRemoteCommand(mockk())
+    var contentsquareRemoteCommand: ContentsquareRemoteCommand = ContentsquareRemoteCommand()
 
     @Before
     fun setUp() {

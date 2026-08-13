@@ -31,7 +31,7 @@ object TealiumHelper {
             dispatchers.add(Dispatchers.RemoteCommands)
         }
         tealium = Tealium.create(INSTANCE_NAME, config) {
-            val remoteCommand = ContentsquareRemoteCommand(application)
+            val remoteCommand = ContentsquareRemoteCommand()
             tealium.remoteCommands?.add(remoteCommand, "contentsquare.json")
         }
     }
