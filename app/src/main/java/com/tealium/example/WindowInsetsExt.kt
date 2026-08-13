@@ -21,8 +21,9 @@ fun AppCompatActivity.applyContentInsets(view: View) {
             left = insets.left,
             right = insets.right
         )
-        WindowInsetsCompat.CONSUMED
+        windowInsets
     }
+    ViewCompat.requestApplyInsets(view)
 }
 
 private fun AppCompatActivity.actionBarHeight(): Int {

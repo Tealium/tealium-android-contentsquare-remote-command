@@ -15,7 +15,7 @@ class ScreenViewActivity : AppCompatActivity() {
         supportActionBar?.title = getString(R.string.title_screen_views)
         applyContentInsets(findViewById(android.R.id.content))
 
-        val screenNameInput = findViewById<EditText>(R.id.apiKeyTextView)
+        val screenNameInput = findViewById<EditText>(R.id.screenNameInput)
         findViewById<Button>(R.id.trackScreenButton).setOnClickListener {
             val screenName = screenNameInput.text.toString().ifBlank { "Another View" }
             TealiumHelper.trackView("screen_title", mapOf("screen" to screenName))

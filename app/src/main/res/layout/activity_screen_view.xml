@@ -7,7 +7,7 @@
     tools:context=".ScreenViewActivity">
 
     <EditText
-        android:id="@+id/apiKeyTextView"
+        android:id="@+id/screenNameInput"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -28,5 +28,5 @@
         android:text="@string/track_screen"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/apiKeyTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/screenNameInput" />
 </androidx.constraintlayout.widget.ConstraintLayout>
