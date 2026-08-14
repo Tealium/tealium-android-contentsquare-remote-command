@@ -1,8 +1,6 @@
 package com.tealium.remotecommands.contentsquare
 
-import android.app.Application
 import android.util.Log
-import android.view.View
 import com.contentsquare.android.Contentsquare
 import com.contentsquare.android.api.Currencies
 import com.contentsquare.android.api.model.CustomVar
@@ -10,7 +8,7 @@ import com.contentsquare.android.api.model.Transaction
 import org.json.JSONObject
 import java.util.*
 
-class ContentsquareInstance(private val application: Application) : ContentsquareCommand {
+class ContentsquareInstance : ContentsquareCommand {
 
     private val TAG = this::class.java.simpleName
 
@@ -80,10 +78,6 @@ class ContentsquareInstance(private val application: Application) : Contentsquar
 
     override fun resumeTracking() {
         Contentsquare.resumeTracking()
-    }
-
-    override fun forgetMe() {
-        Contentsquare.forgetMe()
     }
 
     override fun optIn() {

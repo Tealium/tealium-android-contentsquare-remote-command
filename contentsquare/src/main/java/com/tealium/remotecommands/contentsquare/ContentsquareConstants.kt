@@ -12,7 +12,6 @@ object Commands {
     const val SEND_USER_IDENTIFIER = "senduseridentifier"
     const val STOP_TRACKING = "stoptracking"
     const val RESUME_TRACKING = "resumetracking"
-    const val FORGET_ME = "forgetme"
     const val OPT_IN = "optin"
     const val OPT_OUT = "optout"
 }

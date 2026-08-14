@@ -18,7 +18,7 @@ class ContentsquareRemoteCommandTest {
     lateinit var mockCommand: ContentsquareCommand
 
     @InjectMockKs
-    var contentsquareRemoteCommand: ContentsquareRemoteCommand = ContentsquareRemoteCommand(mockk())
+    var contentsquareRemoteCommand: ContentsquareRemoteCommand = ContentsquareRemoteCommand()
 
     @Before
     fun setUp() {
@@ -313,20 +313,6 @@ class ContentsquareRemoteCommandTest {
         
         verify {
             mockCommand.resumeTracking()
-        }
-        confirmVerified(mockCommand)
-    }
-    
-    @Test
-    fun forgetMeCalled() {
-        val payload = JSONObject()
-        
-        every { mockCommand.forgetMe() } just Runs
-        
-        contentsquareRemoteCommand.parseCommands(arrayOf(Commands.FORGET_ME), payload)
-        
-        verify {
-            mockCommand.forgetMe()
         }
         confirmVerified(mockCommand)
     }

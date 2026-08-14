@@ -8,13 +8,30 @@ import java.util.*
 import kotlin.jvm.Throws
 
 open class ContentsquareRemoteCommand @JvmOverloads constructor(
-    application: Application,
     commandId: String = DEFAULT_COMMAND_ID,
     description: String = DEFAULT_COMMAND_DESCRIPTION
 ) : RemoteCommand(commandId, description, BuildConfig.TEALIUM_CONTENTSQUARE_VERSION) {
 
+    @Deprecated(
+        message = "The application parameter is no longer required and will be removed in a future version.",
+        replaceWith = ReplaceWith("ContentsquareRemoteCommand()")
+    )
+    constructor(application: Application) : this()
+
+    @Deprecated(
+        message = "The application parameter is no longer required and will be removed in a future version.",
+        replaceWith = ReplaceWith("ContentsquareRemoteCommand(commandId)")
+    )
+    constructor(application: Application, commandId: String) : this(commandId)
+
+    @Deprecated(
+        message = "The application parameter is no longer required and will be removed in a future version.",
+        replaceWith = ReplaceWith("ContentsquareRemoteCommand(commandId, description)")
+    )
+    constructor(application: Application, commandId: String, description: String) : this(commandId, description)
+
     private val TAG = this::class.java.simpleName
-    var contentsquareInstance: ContentsquareCommand = ContentsquareInstance(application)
+    var contentsquareInstance: ContentsquareCommand = ContentsquareInstance()
 
     companion object {
         const val DEFAULT_COMMAND_ID = "contentsquare"
@@ -107,9 +124,6 @@ open class ContentsquareRemoteCommand @JvmOverloads constructor(
                 }
                 Commands.RESUME_TRACKING -> {
                     contentsquareInstance.resumeTracking()
-                }
-                Commands.FORGET_ME -> {
-                    contentsquareInstance.forgetMe()
                 }
                 Commands.OPT_IN -> {
                     contentsquareInstance.optIn()

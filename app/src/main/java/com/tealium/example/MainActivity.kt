@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
         listRecyclerView.adapter = ListAdapter()
 
         supportActionBar?.title = "Tealium Contentsquare Demo"
+        applyContentInsets(listRecyclerView)
     }
 
     override fun onResume() {

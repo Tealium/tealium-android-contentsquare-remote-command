@@ -14,16 +14,15 @@ class MiscellaneousActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+        supportActionBar?.title = getString(R.string.title_miscellaneous)
+        applyContentInsets(view)
+
         binding.stopTrackingButton.setOnClickListener {
             TealiumHelper.trackEvent("stop_tracking")
         }
 
         binding.resumeTrackingButton.setOnClickListener {
             TealiumHelper.trackEvent("resume_tracking")
-        }
-
-        binding.forgetMeButton.setOnClickListener {
-            TealiumHelper.trackEvent("forget_me")
         }
 
         binding.optInButton.setOnClickListener {
